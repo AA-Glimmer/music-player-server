@@ -32,8 +32,9 @@ class Matcher:
         # score all songs in a list, based on the consine of user mood vector and  song mood vector
         # return a score list
         song_scores = map(lambda song_model:
-                          utils.find_consine(song_model.vectorize_mood(),
-                                             user_model.vectorize_mood()))
+                          utils.find_consine_distance(song_model.vectorize_mood(),
+                                                      user_model.vectorize_mood()),
+                          song_models)
         return list(song_scores)
 
     def _pick_random_song(self, song_models, song_scores):

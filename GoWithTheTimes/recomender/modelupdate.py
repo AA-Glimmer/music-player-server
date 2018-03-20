@@ -56,7 +56,7 @@ class UserModel:
     def vectorize_mood(self):
         return self.mood.vectorize()
 
-    def update_model(self, user_model, reaction, song_model):
+    def update_model(self, reaction, song_model):
         # if the mood of the songs he like always change, then he/she is a mood person.
         # give him/her higher update_rate
         if reaction == 'like':
