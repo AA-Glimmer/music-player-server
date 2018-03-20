@@ -1,4 +1,6 @@
-from GoWithTheTimes.recomender.Utils import find_standard_error
+import random
+
+from GoWithTheTimes.recomender.utils import find_standard_error
 
 
 class SongCategory:
@@ -7,6 +9,13 @@ class SongCategory:
         self.pop = pop / float(_sum)
         self.rock = rock / float(_sum)
         self.jazz = jazz / float(_sum)
+
+    def generate_random_song_category(self):
+        return random.choices([SongCategory(pop=1, rock=0, jazz=0),
+                               SongCategory(pop=0, rock=1, jazz=0),
+                               SongCategory(pop=0, rock=0, jazz=1), ],
+
+                              weights=[self.pop, self.rock, self.jazz], k=1)
 
 
 class Mood:
