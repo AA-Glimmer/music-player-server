@@ -13,7 +13,7 @@ class usermodel(models.Model):
     updaterate = models.FloatField(default = 0.0, null=False, blank=False)
 
     def __str__(self):
-        return self.user.username
+        return str(self.user_id)
 
 class user_preference(models.Model):
     user_id = models.OneToOneField(User)
@@ -23,16 +23,16 @@ class user_preference(models.Model):
     counter = models.IntegerField(default=0,null=False, blank=False)
 
     def __str__(self):
-        return self.user.username
+        return str(self.user_id)
 
 class like_song(models.Model):
-    user_id = models.ForeignKey('user_preference')
+    user_id = models.ForeignKey(usermodel)
     song_id = models.CharField(max_length = 15)
     def __str__(self):
-        return str(self.id)
+        return str(self.user_id)
 
 class hate_song(models.Model):
-    user_id = models.ForeignKey('user_preference')
+    user_id = models.ForeignKey(usermodel)
     song_id = models.CharField(max_length = 15)
     def __str__(self):
-        return str(self.id)
+        return str(self.user_id)
