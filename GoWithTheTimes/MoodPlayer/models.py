@@ -16,7 +16,7 @@ class usermodel(models.Model):
         return str(self.user_id)
 
 class user_preference(models.Model):
-    user_id = models.OneToOneField(User)
+    user_id = models.OneToOneField(usermodel)
     jazz = models.FloatField(default = 1, null=False, blank=False)
     pop = models.FloatField(default = 1, null=False, blank=False)
     rock = models.FloatField(default = 1, null=False, blank=False)
