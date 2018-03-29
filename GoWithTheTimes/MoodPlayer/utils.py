@@ -8,11 +8,15 @@ def find_standard_error(vector):
 
 
 def find_consine_distance(vector_l, vector_r):
+    print(vector_l)
+    print(vector_r)
     if len(vector_l) != len(vector_r):
         print("vector_l and vector_r should have same dimension")
         raise Exception
     numerator = sum([vector_l[i] * vector_r[i] for i in range(len(vector_l))])
     denominator = math.sqrt(sum([e ** 2 for e in vector_l])) * math.sqrt(sum([e ** 2 for e in vector_r]))
+    if(denominator==0):
+        denominator = 0.0000000000001
     result = numerator / denominator
     # Opps! forget I could
     # from scipy import spatial

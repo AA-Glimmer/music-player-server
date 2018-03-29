@@ -17,7 +17,7 @@ class usermodel(models.Model):
 
 class user_preference(models.Model):
     user_id = models.OneToOneField(usermodel)
-    jazz = models.FloatField(default = 1, null=False, blank=False)
+    rap = models.FloatField(default = 1, null=False, blank=False)
     pop = models.FloatField(default = 1, null=False, blank=False)
     rock = models.FloatField(default = 1, null=False, blank=False)
     counter = models.IntegerField(default=0,null=False, blank=False)
@@ -25,14 +25,25 @@ class user_preference(models.Model):
     def __str__(self):
         return str(self.user_id)
 
+class song_metadata(models.Model):
+    song_id = models.CharField(default = 'song_100',max_length = 15)
+    title = models.CharField(default = 'abc',max_length = 100)
+    song_length = models.IntegerField(default=0,null=False, blank=False)
+    size = models.IntegerField(default=0,null=False, blank=False)
+    path = models.CharField(default = '/Users/WolfDen/Desktop/songs/',max_length = 100)
+    genre = models.CharField(default='pop', max_length = 5)
+    mood = models.CharField(default='happy', max_length = 10)
+    def __str__(self):
+        return str(self.id)
+
 class like_song(models.Model):
     user_id = models.ForeignKey(usermodel)
-    song_id = models.CharField(max_length = 15)
+    song_id = models.ForeignKey(song_metadata)
     def __str__(self):
         return str(self.user_id)
 
 class hate_song(models.Model):
     user_id = models.ForeignKey(usermodel)
-    song_id = models.CharField(max_length = 15)
+    song_id = models.ForeignKey(song_metadata)
     def __str__(self):
         return str(self.user_id)
