@@ -5,45 +5,209 @@ from MoodPlayer import utils
 from MoodPlayer import songmatcher
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 
 # Create your views here.
-def PlayerService(request):
-    skip = request.GET['skip']
-    like = request.GET['like']
-    hate = request.GET['hate']
-    user = request.GET['user']
-    createuser = request.GET['createuser']
-    userpref = request.GET['userpref']
+@csrf_exempt
+def LoginFun(request):
+    print(request)
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    print(password)
+    user_id = 0
+    result = {}
+    user_id = login_user(username,password)
+    if(user_id!=0):
+        result['message'] = 'logged in successfully'
+    else:
+        result['message'] = 'Incorrect username or password'
+    #result = PlayerService(user=user,username=username,password=password)
+    #print(username)
+    #print(password)
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+@csrf_exempt
+def Signup(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    createuser='1'
+    result = {}
+    message = PlayerService(createuser=createuser,username=username,password=password)
+    result['message'] = message
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+@csrf_exempt
+def Genreselection(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    userpreforder = received_json_data['genreSelection']
+    userpreforder = userpreforder.replace("[","")
+    userpreforder = userpreforder.replace("]","")
+    userpref='1'
+    user='1'
+    result = {}
+    message = PlayerService(user=user,userpref=userpref,username=username,password=password,userpreforder=userpreforder)
+    result['message'] = message
+    return HttpResponse(json.dumps(result), content_type="application/json")
+@csrf_exempt
+def songInitial(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    #userpreforder = userpreforder.replace("[","")
+    #userpreforder = userpreforder.replace("]","")
+    result = {}
+    user_id = login_user(username,password)
+    user_usermodel = usermodel.objects.get(user_id=user_id)
+    song_id_chosen = recommend_song(user_usermodel)
+    print(song_id_chosen)
+    song_songmodel_chosen = song_metadata.objects.get(id=song_id_chosen)
+
+    result['songId'] = song_songmodel_chosen.song_id
+    result['songURL'] = song_songmodel_chosen.path
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+@csrf_exempt
+def user_model(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    #userpreforder = userpreforder.replace("[","")
+    #userpreforder = userpreforder.replace("]","")
+    result = {}
+    user_id = login_user(username,password)
+    user_usermodel = usermodel.objects.get(user_id=user_id)
+    print(user_usermodel)
+
+    result['Happy'] = user_usermodel.happy
+    result['Angry'] = user_usermodel.angry
+    result['Sad'] = user_usermodel.sad
+    result['Anxious'] = user_usermodel.anxious
+    result['Loving'] = user_usermodel.loving
+    result['Fearful'] = user_usermodel.fearful
+
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+@csrf_exempt
+def song(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    song_id = received_json_data['songId']
+    isLike = received_json_data['isLike']
+    #print(isLike)
+    result = {}
+    user='1'
+    like = '0'
+    no_action='1'
+    if(isLike):
+        like = '1'
+    [song_id,path] = PlayerService(like=like,no_action=no_action,user=user,username=username,password=password,song_id=song_id)
+
+    result['songId'] = song_id
+    result['songURL'] = path
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+@csrf_exempt
+def skip(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    song_id = received_json_data['songId']
+    #isLike = received_json_data['isLike']
+    #print(isLike)
+    result = {}
+    user='1'
+    #like = '0'
+    skip='1'
+    #if(isLike):
+    #    like = '1'
+    [song_id,path] = PlayerService(skip=skip,user=user,username=username,password=password,song_id=song_id)
+
+    result['songId'] = song_id
+    result['songURL'] = path
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+@csrf_exempt
+def hate(request):
+    received_json_data=json.loads(request.body)
+    print(received_json_data)
+    username = received_json_data['username']
+    password = received_json_data['password']
+    song_id = received_json_data['songId']
+    #isLike = received_json_data['isLike']
+    #print(isLike)
+    result = {}
+    user='1'
+    #like = '0'
+    hate='1'
+    #if(isLike):
+    #    like = '1'
+    [song_id,path] = PlayerService(hate=hate,user=user,username=username,password=password,song_id=song_id)
+
+    result['songId'] = song_id
+    result['songURL'] = path
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+def PlayerService(skip='0',like='0',hate='0',no_action='0',user='0',createuser='0',userpref='0',username="user3",password="test123test3",useremail="user3@abc.com",userpreforder="rap,pop,rock",song_id="song_101"):
+    #print(request)
+    #skip = request.GET['skip']
+    #like = request.GET['like']
+    #hate = request.GET['hate']
+    #user = request.GET['user']
+    #createuser = request.GET['createuser']
+    #userpref = request.GET['userpref']
     result = ''
     user_id = 0
     if(user == '1'):
-        username = request.GET['username']
-        password = request.GET['password']
-        user_id = login_user(request,username,password)
+        #username = request.GET['username']
+        #password = request.GET['password']
+        print(username)
+        user_id = login_user(username,password)
+        #print("################")
+        print(user_id)
         if(user_id==0):
             result = "Incorrect username or password"
         else:
             result = "logged in successfully"
-    if(user_id!=0):
-        if(userpref == '1'):
-            userpreforder = request.GET['userpreforder']
-            result = update_user_preference_model(user_id,userpreforder)
-        if(skip == '1'):
-            #result = "skipped"
-            result = update_model(user_id,'skip','song_102')
-        elif(like == '1'):
-            #result = "liked"
-            result = update_model(user_id,'like','song_102')
-        elif(hate == '1'):
-            #result = "hated"
-            result = update_model(user_id,'hate','song_102')
-        else:
-            #result = "keep playing"
-            result = update_model(user_id,'hate','song_102')
+        if(user_id!=0):
+            print("Insideif")
+            if(userpref == '1'):
+                #userpreforder = request.GET['userpreforder']
+                result = update_user_preference_model(user_id,userpreforder)
+            if(skip == '1'):
+                #result = "skipped"
+                result = update_model(user_id,'skip',song_id)
+            elif(like == '1'):
+                #result = "liked"
+                result = update_model(user_id,'like',song_id)
+            elif(no_action == '1'):
+                #result = "liked"
+                result = update_model(user_id,'no_action',song_id)
+            elif(hate == '1'):
+                #result = "hated"
+                result = update_model(user_id,'hate',song_id)
+            else:
+                print("Keep Playing")
+                #result = "keep playing"
+                #result = "No selection"
+                #result = update_model(user_id,'hate','song_102')
     elif(createuser=='1'):
-        username = request.GET['username']
-        password = request.GET['password']
-        useremail = request.GET['useremail']
+        #username = request.GET['username']
+        #password = request.GET['password']
+        #useremail = request.GET['useremail']
         user = User.objects.create_user(username,useremail,password)
         print(user)
         user_usermodel_created = usermodel.objects.create(user_id=user)
@@ -52,18 +216,23 @@ def PlayerService(request):
         result = "new user created"
     else:
         result ="Incorrect username or password"
-    return HttpResponse(result)
+    return result
 
-def login_user(request,username,password):
+def login_user(username,password):
+    print("inside login user")
     luser = authenticate(username = username,password=password)
+    print("luser id")
+    print(luser.id)
+    #print(luser)
     if luser is None:
         return 0
     else:
         #luser = User.objects.get(id=luser.id)
         #login(request, luser, backend='django.contrib.auth.backends.ModelBackend')
+        #print("###################")
         return luser.id
 
-def logout_user(request):
+def logout_user():
     #logout(request)
     return "logged out"
 
@@ -245,6 +414,7 @@ def update_model(user_id,reaction, song_id):
         raise Exception
 
     #update_rate = find_standard_error(liked_songs)
+    #if(reaction == 'no_action' or reaction == 'hate' or  reaction == 'skip'):
     song_id_chosen = recommend_song(user_usermodel)
     print(song_id_chosen)
     song_songmodel_chosen = song_metadata.objects.get(id=song_id_chosen)

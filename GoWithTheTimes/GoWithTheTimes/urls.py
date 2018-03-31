@@ -15,10 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from MoodPlayer.views import PlayerService
+from MoodPlayer.views import PlayerService,LoginFun,Signup,Genreselection,songInitial,song,skip,hate,user_model
 from django.conf.urls import url, include
 
 urlpatterns = [
     url(r'^player/$', PlayerService),
+    url(r'^login', LoginFun),
+    url(r'^signup', Signup),
+    url(r'^user/genreselection', Genreselection),
+    url(r'^song', song),
+    url(r'^song/initial', songInitial),
+    url(r'^song/skip', skip),
+    url(r'^song/hate', hate),
+    url(r'^user/usermodel', user_model),
     url('admin/', admin.site.urls),
 ]
