@@ -370,47 +370,47 @@ def update_model(user_id,reaction, song_id):
             song_hated.save()
             hatesong_fromdb = []
         if song_songmodel.mood == 'happy':
-            user_usermodel.happy = user_usermodel.happy - (user_usermodel.happy)*0.1
-            user_usermodel.sad =  user_usermodel.sad + (1- user_usermodel.sad)*0.1* 0.2
-            user_usermodel.angry =  user_usermodel.angry +(1- user_usermodel.angry)*0.1* 0.2
-            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1* 0.2
-            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1* 0.2
-            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1* 0.2
+            user_usermodel.happy = user_usermodel.happy - (user_usermodel.happy)*0.1*0.2
+            user_usermodel.sad =  user_usermodel.sad + (1- user_usermodel.sad)*0.1
+            user_usermodel.angry =  user_usermodel.angry +(1- user_usermodel.angry)*0.1
+            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1
+            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1
+            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1
         elif song_songmodel.mood == 'sad':
-            user_usermodel.sad = user_usermodel.sad - (user_usermodel.sad)*0.1
-            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1* 0.2
-            user_usermodel.angry =  user_usermodel.angry +(1- user_usermodel.angry)*0.1* 0.2
-            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1* 0.2
-            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1* 0.2
-            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1* 0.2
+            user_usermodel.sad = user_usermodel.sad - (user_usermodel.sad)*0.1*0.2
+            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1
+            user_usermodel.angry =  user_usermodel.angry +(1- user_usermodel.angry)*0.1
+            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1
+            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1
+            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1
         elif song_songmodel.mood == 'angry':
-            user_usermodel.angry = user_usermodel.angry - (user_usermodel.angry)*0.1
-            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1* 0.2
-            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1* 0.2
-            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1* 0.2
-            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1* 0.2
-            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1* 0.2
+            user_usermodel.angry = user_usermodel.angry - (user_usermodel.angry)*0.1*0.2
+            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1
+            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1
+            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1
+            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1
+            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1
         elif song_songmodel.mood == 'anxious':
-            user_usermodel.anxious = user_usermodel.anxious - (user_usermodel.anxious)*0.1
-            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1* 0.2
-            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1* 0.2
-            user_usermodel.angry =  user_usermodel.angry + (1-user_usermodel.angry)*0.1* 0.2
-            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1* 0.2
-            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1* 0.2
+            user_usermodel.anxious = user_usermodel.anxious - (user_usermodel.anxious)*0.1*0.2
+            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1
+            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1
+            user_usermodel.angry =  user_usermodel.angry + (1-user_usermodel.angry)*0.1
+            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1
+            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1
         elif song_songmodel.mood == 'loving':
-            user_usermodel.loving = user_usermodel.loving - (user_usermodel.loving)*0.1
-            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1* 0.2
-            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1* 0.2
-            user_usermodel.angry =  user_usermodel.angry + (1-user_usermodel.angry)*0.1* 0.2
-            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1* 0.2
-            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1* 0.2
+            user_usermodel.loving = user_usermodel.loving - (user_usermodel.loving)*0.1*0.2
+            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1
+            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1
+            user_usermodel.angry =  user_usermodel.angry + (1-user_usermodel.angry)*0.1
+            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1
+            user_usermodel.fearful =  user_usermodel.fearful + (1-user_usermodel.fearful)*0.1
         elif song_songmodel.mood == 'fearful':
-            user_usermodel.fearful = user_usermodel.fearful - (user_usermodel.fearful)*0.1
-            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1* 0.2
-            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1* 0.2
-            user_usermodel.angry =  user_usermodel.angry + (1-user_usermodel.angry)*0.1* 0.2
-            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1* 0.2
-            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1* 0.2
+            user_usermodel.fearful = user_usermodel.fearful - (user_usermodel.fearful)*0.1*0.2
+            user_usermodel.happy =  user_usermodel.happy + (1- user_usermodel.happy)*0.1
+            user_usermodel.sad =  user_usermodel.sad +(1- user_usermodel.sad)*0.1
+            user_usermodel.angry =  user_usermodel.angry + (1-user_usermodel.angry)*0.1
+            user_usermodel.anxious =  user_usermodel.anxious + (1-user_usermodel.anxious)*0.1
+            user_usermodel.loving =  user_usermodel.loving + (1-user_usermodel.loving)*0.1
 
         user_usermodel.save()
 
