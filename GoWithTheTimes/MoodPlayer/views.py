@@ -65,6 +65,7 @@ def songInitial(request):
     password = received_json_data['password']
     #userpreforder = userpreforder.replace("[","")
     #userpreforder = userpreforder.replace("]","")
+    print("----------testing here--------------")
     result = {}
     user_id = login_user(username,password)
     user_usermodel = usermodel.objects.get(user_id=user_id)
@@ -73,7 +74,8 @@ def songInitial(request):
     song_songmodel_chosen = song_metadata.objects.get(id=song_id_chosen)
 
     result['songId'] = song_songmodel_chosen.song_id
-    result['songURL'] = song_songmodel_chosen.path
+    result['songURL'] = song_songmodel_chosen.path+song_songmodel_chosen.title
+
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 @csrf_exempt
@@ -100,6 +102,7 @@ def user_model(request):
 
 @csrf_exempt
 def song(request):
+    print("-----------Prashant123")
     received_json_data=json.loads(request.body)
     print(received_json_data)
     username = received_json_data['username']
@@ -138,6 +141,7 @@ def skip(request):
 
     result['songId'] = song_id
     result['songURL'] = path
+    print ("dasfafad---------------"+str(path))
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 @csrf_exempt
@@ -284,7 +288,7 @@ def recommend_song(user_usermodel):
     song_id_chosen = song_id_chosen_list[0]
     hated_song_list = []
     hatesong_models = hate_song.objects.filter(user_id=user_usermodel)
-    print("reached hate song checks")
+    print("reached hate song checks"+"Prashant0---------------------")
     #print(hatesong_fromdb)
     for sm in hatesong_models:
         hated_song_list.append(sm.song_id)
@@ -298,7 +302,7 @@ def update_model(user_id,reaction, song_id):
     # if the mood of the songs he like always change, then he/she is a mood person.
     # give him/her higher update_rate
     id = user_id
-    print(user_id)
+    print("USER ID: "+str(user_id))
     user_usermodel = usermodel.objects.get(user_id=id)
     #retrieve the song meta data
     song_songmodel = song_metadata.objects.get(song_id=song_id)
@@ -419,4 +423,4 @@ def update_model(user_id,reaction, song_id):
     print(song_id_chosen)
     song_songmodel_chosen = song_metadata.objects.get(id=song_id_chosen)
 
-    return [song_songmodel_chosen.song_id,song_songmodel_chosen.path]
+    return [song_songmodel_chosen.song_id,song_songmodel_chosen.path + song_songmodel_chosen.title]
